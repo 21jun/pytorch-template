@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,7 +7,7 @@ import torch.optim as optim
 
 from data_loader.data_loaders import MnistDataLoader
 from model.model import MnistModel
-from trainer.trainer import Trainer
+from trainer import MnistTrainer
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -22,8 +24,13 @@ valid_data_loader = data_loader.split_validation()
 model = MnistModel()
 optimizer = optim.Adam(model.parameters())
 criterion = nn.CrossEntropyLoss()
+save_dir = Path('saved/')
+resume_path = Path('saved/checkpoint-epoch5.pth')
 
-trainer = Trainer(model=model, data_loader=data_loader, valid_data_loader=valid_data_loader, criterion=criterion,
-                  optimizer=optimizer, epochs=5, device=device)
+trainer = MnistTrainer(model=model, data_loader=data_loader,
+                       valid_data_loader=valid_data_loader,
+                       criterion=criterion, optimizer=optimizer,
+                       epochs=5, device=device, save_dir=save_dir,
+                       resume_path=resume_path)
 
-trainer.train(do_valid=True)
+trainer.train(do_valid=True, do_save=True)
