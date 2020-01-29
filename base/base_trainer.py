@@ -88,9 +88,5 @@ class BaseTrainer:
 
         print("Model Load Complete")
 
-    def _progress(self, info, do_valid):
-        print("train_loss :", info['train_loss'],
-              "train_acc :", info['train_acc'])
-        if do_valid:
-            print("valid_loss :", info['valid_loss'],
-                  "valid_acc :", info['valid_acc'])
+    def _progress(self, info):
+        print(info)
