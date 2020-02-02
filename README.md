@@ -22,7 +22,7 @@ pip install tqdm
 
 MNIST example
 ```sh
-python main.py
+python train_mnist.py
 ```
 
 ### result
